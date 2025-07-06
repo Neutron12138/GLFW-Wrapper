@@ -17,6 +17,19 @@ namespace glfw_wrapper
         return window;
     }
 
+    void Window::set_opengl(const glm::ivec2 &version, bool enable_debug, base::Int32 profile)
+    {
+        set_hint(GLFW_CONTEXT_VERSION_MAJOR, version.x);
+        set_hint(GLFW_CONTEXT_VERSION_MINOR, version.y);
+        set_hint(GLFW_OPENGL_DEBUG_CONTEXT, enable_debug);
+        set_hint(GLFW_OPENGL_PROFILE, profile);
+    }
+
+    void Window::set_opengl(bool enable_debug, base::Int32 profile)
+    {
+        set_opengl(glm::ivec2(4, 5), enable_debug, profile);
+    }
+
     std::string Window::get_clipboard_string() const
     {
         const char *string = glfwGetClipboardString(m_window);

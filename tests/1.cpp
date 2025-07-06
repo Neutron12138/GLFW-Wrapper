@@ -18,11 +18,8 @@ int main()
     for (auto &ext : extensions)
         std::cout << "\t" << ext << std::endl;
 
-    glfw_wrapper::Window::set_hint(GLFW_CONTEXT_VERSION_MAJOR, 3);
-    glfw_wrapper::Window::set_hint(GLFW_CONTEXT_VERSION_MINOR, 3);
-    glfw_wrapper::Window::set_hint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
-
     auto monitor = glfw_wrapper::Monitor::get_primary();
+    glfw_wrapper::Window::set_opengl();
     auto window = glfw_wrapper::Window(glm::ivec2(640, 480), "", monitor);
     window.make_context_current();
     auto cursor = glfw_wrapper::Cursor(GLFW_HAND_CURSOR);

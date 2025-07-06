@@ -17,6 +17,9 @@ namespace glfw_wrapper
 
         static void set_hint(int hint, int value) { glfwWindowHint(hint, value); }
 
+        static void set_opengl(const glm::ivec2 &version, bool enable_debug = false, base::Int32 profile = GLFW_OPENGL_CORE_PROFILE);
+        static void set_opengl(bool enable_debug = false, base::Int32 profile = GLFW_OPENGL_CORE_PROFILE);
+
     private:
         /// @brief GLFW窗口句柄
         GLFWwindow *m_window = nullptr;

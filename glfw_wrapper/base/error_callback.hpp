@@ -27,27 +27,26 @@ namespace glfw_wrapper
 
     private:
         /// @brief 回调数组
-        static inline CallbackArray m_callbacks = {};
+        CallbackArray m_callbacks = {};
 
     private:
         inline ErrorCallback()
         {
             glfwSetErrorCallback(_error_callback);
-            m_callbacks.push_back(Function([&](int error_code, const char *description)
-                                           { _default_error_callback(error_code, description); }));
+            m_callbacks.push_back(Function(_default_error_callback));
         }
 
     public:
         inline ~ErrorCallback() { glfwSetErrorCallback(nullptr); }
 
     private:
-        static void _error_callback(int error_code, const char *description)
+        static inline void _error_callback(int error_code, const char *description)
         {
-            for (auto &callback : m_callbacks)
+            for (auto &callback : get_instance().m_callbacks)
                 callback(error_code, description);
         }
 
-        void _default_error_callback(int error_code, const char *description)
+        static inline void _default_error_callback(int error_code, const char *description)
         {
             std::cout << "[GLFW Error]" << std::endl
                       << "error code: " << error_code << std::endl
@@ -55,12 +54,12 @@ namespace glfw_wrapper
         }
 
     public:
-        const CallbackArray &get_callbacks() const { return m_callbacks; }
+        inline const CallbackArray &get_callbacks() const { return m_callbacks; }
 
     public:
         template <typename F>
-        void add_callback(F callback) { m_callbacks.push_back(Function(callback)); }
-        void remove_callback(CallbackConstIterator iter) { m_callbacks.erase(iter); }
+        inline void add_callback(F callback) { m_callbacks.push_back(Function(callback)); }
+        inline void remove_callback(CallbackConstIterator iter) { m_callbacks.erase(iter); }
     };
 
 } // namespace glfw_wrapper
