@@ -16,7 +16,7 @@ int main()
               << "required extensions:" << std::endl;
     auto extensions = context.get_required_instance_extensions();
     for (auto &ext : extensions)
-        std::cout << ext << std::endl;
+        std::cout << "\t" << ext << std::endl;
 
     glfw_wrapper::Window::set_hint(GLFW_CONTEXT_VERSION_MAJOR, 3);
     glfw_wrapper::Window::set_hint(GLFW_CONTEXT_VERSION_MINOR, 3);

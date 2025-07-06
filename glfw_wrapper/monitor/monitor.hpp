@@ -10,8 +10,6 @@
 namespace glfw_wrapper
 {
     BASE_DECLARE_REF_TYPE(Monitor);
-    using VideoMode = GLFWvidmode;
-    using GammaRamp = GLFWgammaramp;
 
     class Monitor
     {

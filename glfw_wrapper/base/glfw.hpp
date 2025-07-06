@@ -1,6 +1,7 @@
 #pragma once
 
 #ifdef GLFW_WRAPPER_USE_VULKAN
+#include <vulkan/vulkan.h>
 #include <vulkan/vulkan.hpp>
 #else
 #define GLFW_INCLUDE_NONE
@@ -13,6 +14,10 @@
 
 namespace glfw_wrapper
 {
+    using VideoMode = GLFWvidmode;
+    using GammaRamp = GLFWgammaramp;
+    using Image = GLFWimage;
+
     glm::ivec3 get_version()
     {
         glm::ivec3 version;

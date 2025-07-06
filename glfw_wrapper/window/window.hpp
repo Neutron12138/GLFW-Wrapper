@@ -74,13 +74,15 @@ namespace glfw_wrapper
         inline base::Int32 should_close() const { return glfwWindowShouldClose(m_window); }
         inline std::string get_title() const { return glfwGetWindowTitle(m_window); }
         inline void *get_user_pointer() const { return glfwGetWindowUserPointer(m_window); }
-        inline GLFWmonitor *get_monitor() const { return glfwGetWindowMonitor(m_window); }
+        inline Monitor get_monitor() const { return glfwGetWindowMonitor(m_window); }
         inline float get_opacity() const { return glfwGetWindowOpacity(m_window); }
         glm::ivec2 get_pos() const;
         glm::ivec2 get_size() const;
         glm::ivec2 get_framebuffer_size() const;
         glm::vec2 get_content_scale() const;
 
+        inline void set_icon() { glfwSetWindowIcon(m_window, 0, nullptr); }
+        inline void set_icon(const Image *image) { glfwSetWindowIcon(m_window, 1, image); }
         inline void set_attrib(base::Int32 attrib, base::Int32 value) { glfwSetWindowAttrib(m_window, attrib, value); }
         inline void set_should_close(base::Int32 value) { glfwSetWindowShouldClose(m_window, value); }
         inline void set_title(const std::string &title) { glfwSetWindowTitle(m_window, title.data()); }
@@ -90,9 +92,9 @@ namespace glfw_wrapper
         inline void set_size_limits(const glm::ivec2 &min, const glm::ivec2 &max) { glfwSetWindowSizeLimits(m_window, min.x, min.y, max.x, max.y); }
         inline void set_aspect_ratio(const glm::ivec2 &ratio) { glfwSetWindowAspectRatio(m_window, ratio.x, ratio.y); }
         inline void set_opacity(float opacity) { glfwSetWindowOpacity(m_window, opacity); }
-        inline void set_monitor(GLFWmonitor *monitor, const glm::ivec2 &pos, const glm::ivec2 &size, base::Int32 refresh_rate)
+        inline void set_monitor(const Monitor &monitor, const glm::ivec2 &pos, const glm::ivec2 &size, base::Int32 refresh_rate)
         {
-            glfwSetWindowMonitor(m_window, monitor, pos.x, pos.y, size.x, size.y, refresh_rate);
+            glfwSetWindowMonitor(m_window, monitor.get_monitor(), pos.x, pos.y, size.x, size.y, refresh_rate);
         }
     };
 

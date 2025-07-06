@@ -22,7 +22,7 @@ namespace glfw_wrapper
             m_cursor = create_cursor(shape);
         }
 
-        inline Cursor(const GLFWimage *image, const glm::ivec2 &hot)
+        inline Cursor(const Image *image, const glm::ivec2 &hot)
         {
             m_cursor = create_cursor(image, hot.x, hot.y);
         }
