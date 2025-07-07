@@ -1,7 +1,6 @@
 #pragma once
 
 #include <vector>
-#include <bits/refwrap.h>
 #include <base/core/ref.hpp>
 #include <base/core/exception.hpp>
 #include "../base/glfw.hpp"
@@ -11,11 +10,13 @@ namespace glfw_wrapper
 {
     BASE_DECLARE_REF_TYPE(Monitor);
 
+    /// @brief GLFW监视器对象
     class Monitor
     {
     public:
         static inline Monitor get_primary() { return glfwGetPrimaryMonitor(); }
         static std::vector<Monitor> get_monitors();
+        static inline GLFWmonitorfun set_callback(GLFWmonitorfun func) { return glfwSetMonitorCallback(func); }
 
     private:
         GLFWmonitor *m_monitor;

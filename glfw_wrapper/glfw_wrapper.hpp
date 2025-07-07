@@ -14,4 +14,7 @@
 
 #include "window/window.hpp"
 #include "window/scoped_context.hpp"
+#include "window/window_with_callback.hpp"
+
 #include "window/window.cpp"
+#include "window/window_with_callback.cpp"

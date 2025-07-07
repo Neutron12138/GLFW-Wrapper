@@ -56,12 +56,14 @@ namespace glfw_wrapper
         inline base::Int64 get_resource_type() const override { return static_cast<::base::Int64>(ResourceType::Window); }
 
     public:
+        inline void set_input_mode(base::Int32 mode, base::Int32 value) { glfwSetInputMode(m_window, mode, value); }
+        inline base::Int32 get_key(base::Int32 key) { return glfwGetKey(m_window, key); }
+
         inline void set_cursor() { glfwSetCursor(m_window, nullptr); }
         inline void set_cursor(const Cursor &cursor) { glfwSetCursor(m_window, cursor.get_cursor()); }
         std::string get_clipboard_string() const;
         inline void set_clipboard_string(const std::string &string) { glfwSetClipboardString(m_window, string.data()); }
 
-        inline void set_input_mode(base::Int32 mode, base::Int32 value) { glfwSetInputMode(m_window, mode, value); }
         inline void make_context_current() { glfwMakeContextCurrent(m_window); }
         inline void swap_buffers() { glfwSwapBuffers(m_window); }
         inline void swap_interval(base::Int32 interval) { glfwSwapInterval(interval); }
