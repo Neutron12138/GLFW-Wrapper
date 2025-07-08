@@ -25,35 +25,23 @@ namespace glfw_wrapper
         GLFWwindow *m_window = nullptr;
 
     public:
-        inline Window(const glm::ivec2 &size, const std::string &title = {})
-        {
-            m_window = create_glfw_window(size.x, size.y, title.data(), nullptr, nullptr);
-        }
-
-        inline Window(const glm::ivec2 &size, const std::string &title, const Window &share)
-        {
-            m_window = create_glfw_window(size.x, size.y, title.data(), nullptr, share.get_window());
-        }
-
-        inline Window(const glm::ivec2 &size, const std::string &title, const Monitor &monitor)
-        {
-            m_window = create_glfw_window(size.x, size.y, title.data(), monitor.get_monitor(), nullptr);
-        }
-
-        inline Window(const glm::ivec2 &size, const std::string &title, const Monitor &monitor, const Window &share)
-        {
-            m_window = create_glfw_window(size.x, size.y, title.data(), monitor.get_monitor(), share.get_window());
-        }
-
-        inline ~Window() override
-        {
-            glfwDestroyWindow(m_window);
-            m_window = nullptr;
-        }
+        inline Window() = default;
+        Window(Window &&from) : m_window(from.m_window) { from.m_window = nullptr; }
+        inline ~Window() override { destroy(); }
 
     public:
+        Window &operator=(Window &&from);
         inline GLFWwindow *get_window() const { return m_window; }
         inline base::Int64 get_resource_type() const override { return static_cast<::base::Int64>(ResourceType::Window); }
+        inline bool is_valid() const override { return m_window; }
+        inline operator GLFWwindow *() const { return m_window; }
+
+    public:
+        void create(const glm::ivec2 &size, const std::string &title = {});
+        void create(const glm::ivec2 &size, const std::string &title, const Monitor &monitor);
+        void create(const glm::ivec2 &size, const std::string &title, const Window &share);
+        void create(const glm::ivec2 &size, const std::string &title, const Monitor &monitor, const Window &share);
+        void destroy();
 
     public:
         inline void set_input_mode(base::Int32 mode, base::Int32 value) { glfwSetInputMode(m_window, mode, value); }

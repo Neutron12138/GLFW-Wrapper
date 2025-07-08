@@ -4,7 +4,7 @@
 class MyWindow : public glfw_wrapper::WindowWithCallback
 {
 public:
-    MyWindow() : glfw_wrapper::WindowWithCallback(glm::ivec2(640, 480)) {}
+    MyWindow() { create(glm::ivec2(512, 512)); }
     ~MyWindow() override = default;
 
 protected:
@@ -24,6 +24,9 @@ int main()
         context.poll_events();
         window.swap_buffers();
     }
+
+    window.destroy();
+    std::cout << window.is_valid() << std::endl;
 
     return 0;
 }

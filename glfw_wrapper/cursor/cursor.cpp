@@ -22,4 +22,31 @@ namespace glfw_wrapper
         return cursor;
     }
 
+    Cursor &Cursor::operator=(Cursor &&from)
+    {
+        destroy();
+        m_cursor = from.m_cursor;
+        from.m_cursor = nullptr;
+        return *this;
+    }
+
+    void Cursor::create(base::Int32 shape)
+    {
+        destroy();
+        m_cursor = create_cursor(shape);
+    }
+
+    void Cursor::create(const GLFWimage *image, const glm::ivec2 &hot)
+    {
+        destroy();
+        m_cursor = create_cursor(image, hot.x, hot.y);
+    }
+
+    void Cursor::destroy()
+    {
+        if (m_cursor)
+            glfwDestroyCursor(m_cursor);
+        m_cursor = nullptr;
+    }
+
 } // namespace glfw_wrapper

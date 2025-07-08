@@ -30,6 +30,45 @@ namespace glfw_wrapper
         set_opengl(glm::ivec2(4, 5), enable_debug, profile);
     }
 
+    Window &Window::operator=(Window &&from)
+    {
+        destroy();
+        m_window = from.m_window;
+        from.m_window = nullptr;
+        return *this;
+    }
+
+    void Window::create(const glm::ivec2 &size, const std::string &title)
+    {
+        destroy();
+        m_window = create_glfw_window(size.x, size.y, title.data());
+    }
+
+    void Window::create(const glm::ivec2 &size, const std::string &title, const Monitor &monitor)
+    {
+        destroy();
+        m_window = create_glfw_window(size.x, size.y, title.data(), monitor, nullptr);
+    }
+
+    void Window::create(const glm::ivec2 &size, const std::string &title, const Window &share)
+    {
+        destroy();
+        m_window = create_glfw_window(size.x, size.y, title.data(), nullptr, share);
+    }
+
+    void Window::create(const glm::ivec2 &size, const std::string &title, const Monitor &monitor, const Window &share)
+    {
+        destroy();
+        m_window = create_glfw_window(size.x, size.y, title.data(), monitor, share);
+    }
+
+    void Window::destroy()
+    {
+        if (m_window)
+            glfwDestroyWindow(m_window);
+        m_window = nullptr;
+    }
+
     std::string Window::get_clipboard_string() const
     {
         const char *string = glfwGetClipboardString(m_window);

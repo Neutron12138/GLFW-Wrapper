@@ -19,19 +19,29 @@ namespace glfw_wrapper
         static inline GLFWmonitorfun set_callback(GLFWmonitorfun func) { return glfwSetMonitorCallback(func); }
 
     private:
-        GLFWmonitor *m_monitor;
+        /// @brief GLFW监视器句柄
+        GLFWmonitor *m_monitor = nullptr;
 
     public:
-        inline Monitor(GLFWmonitor *monitor) : m_monitor(monitor)
-        {
-            if (!monitor)
-                throw BASE_MAKE_RUNTIME_ERROR("Unable to observe an empty monitor");
-        }
-
+        inline Monitor() = default;
+        inline Monitor(GLFWmonitor *monitor) : m_monitor(monitor) {}
+        inline Monitor(const Monitor &another) : m_monitor(another.m_monitor) {}
         inline ~Monitor() = default;
 
     public:
+        inline Monitor &operator=(GLFWmonitor *monitor)
+        {
+            m_monitor = monitor;
+            return *this;
+        }
+        inline Monitor &operator=(const Monitor &another)
+        {
+            m_monitor = another.m_monitor;
+            return *this;
+        }
         inline GLFWmonitor *get_monitor() const { return m_monitor; }
+        inline operator GLFWmonitor *() const { return m_monitor; }
+        inline bool is_valid() const { return m_monitor; }
 
     public:
         std::vector<VideoMode> get_video_modes() const;

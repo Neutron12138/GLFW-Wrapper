@@ -77,14 +77,7 @@ namespace glfw_wrapper
         WindowCloseCallback window_close_callback;
 
     public:
-        inline WindowWithCallback(const glm::ivec2 &size, const std::string &title = {})
-            : Window(size, title) { _connect_callbacks(); }
-        inline WindowWithCallback(const glm::ivec2 &size, const std::string &title, const Window &share)
-            : Window(size, title, share) { _connect_callbacks(); }
-        inline WindowWithCallback(const glm::ivec2 &size, const std::string &title, const Monitor &monitor)
-            : Window(size, title, monitor) { _connect_callbacks(); }
-        inline WindowWithCallback(const glm::ivec2 &size, const std::string &title, const Monitor &monitor, const Window &share)
-            : Window(size, title, monitor, share) { _connect_callbacks(); }
+        inline WindowWithCallback() = default;
         inline ~WindowWithCallback() override { _disconnect_callbacks(); }
 
     protected:
