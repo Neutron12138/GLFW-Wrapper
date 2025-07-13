@@ -78,7 +78,21 @@ namespace glfw_wrapper
 
     public:
         inline WindowWithCallback() = default;
+        inline WindowWithCallback(const glm::ivec2 &size, const std::string &title = {}) : Window(size, title) { _connect_callbacks(); }
+        inline WindowWithCallback(const glm::ivec2 &size, const std::string &title,
+                                  const Monitor &monitor) : Window(size, title, monitor) { _connect_callbacks(); }
+        inline WindowWithCallback(const glm::ivec2 &size, const std::string &title,
+                                  const Window &share) : Window(size, title, share) { _connect_callbacks(); }
+        inline WindowWithCallback(const glm::ivec2 &size, const std::string &title,
+                                  const Monitor &monitor, const Window &share) : Window(size, title, monitor, share) { _connect_callbacks(); }
         inline ~WindowWithCallback() override { _disconnect_callbacks(); }
+        BASE_DELETE_COPY_FUNCTION(WindowWithCallback);
+
+    public:
+        void create(const glm::ivec2 &size, const std::string &title = {}) override;
+        void create(const glm::ivec2 &size, const std::string &title, const Monitor &monitor) override;
+        void create(const glm::ivec2 &size, const std::string &title, const Window &share) override;
+        void create(const glm::ivec2 &size, const std::string &title, const Monitor &monitor, const Window &share) override;
 
     protected:
         virtual void _on_window_size(const glm::ivec2 &size) {}

@@ -20,11 +20,9 @@ int main()
 
     auto monitor = glfw_wrapper::Monitor::get_primary();
     glfw_wrapper::Window::set_opengl();
-    auto window = glfw_wrapper::Window();
-    window.create(glm::ivec2(512, 512));
+    auto window = glfw_wrapper::Window(glm::ivec2(512, 512));
     window.make_context_current();
-    auto cursor = glfw_wrapper::Cursor();
-    cursor.create(GLFW_HAND_CURSOR);
+    auto cursor = glfw_wrapper::Cursor(GLFW_HAND_CURSOR);
     window.set_cursor(cursor);
 
     while (!window.should_close())

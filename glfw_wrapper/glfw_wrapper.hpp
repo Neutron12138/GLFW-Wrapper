@@ -1,5 +1,7 @@
 #pragma once
 
+#include <base/version.hpp>
+
 #include "base/error.hpp"
 #include "base/glfw.hpp"
 #include "base/error_callback.hpp"

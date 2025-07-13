@@ -13,8 +13,39 @@
 
 namespace glfw_wrapper
 {
+    void WindowWithCallback::create(const glm::ivec2 &size, const std::string &title)
+    {
+        _disconnect_callbacks();
+        Window::create(size, title);
+        _connect_callbacks();
+    }
+
+    void WindowWithCallback::create(const glm::ivec2 &size, const std::string &title, const Monitor &monitor)
+    {
+        _disconnect_callbacks();
+        Window::create(size, title, monitor);
+        _connect_callbacks();
+    }
+
+    void WindowWithCallback::create(const glm::ivec2 &size, const std::string &title, const Window &share)
+    {
+        _disconnect_callbacks();
+        Window::create(size, title, share);
+        _connect_callbacks();
+    }
+
+    void WindowWithCallback::create(const glm::ivec2 &size, const std::string &title, const Monitor &monitor, const Window &share)
+    {
+        _disconnect_callbacks();
+        Window::create(size, title, monitor, share);
+        _connect_callbacks();
+    }
+
     void WindowWithCallback::_connect_callbacks()
     {
+        if (!get_window())
+            return;
+
         glfwSetWindowUserPointer(get_window(), this);
         glfwSetWindowSizeCallback(get_window(), _window_size_callback);
         glfwSetFramebufferSizeCallback(get_window(), _framebuffer_size_callback);
@@ -36,7 +67,26 @@ namespace glfw_wrapper
 
     void WindowWithCallback::_disconnect_callbacks()
     {
+        if (!get_window())
+            return;
+
         glfwSetWindowUserPointer(get_window(), nullptr);
+        glfwSetWindowSizeCallback(get_window(), nullptr);
+        glfwSetFramebufferSizeCallback(get_window(), nullptr);
+        glfwSetWindowContentScaleCallback(get_window(), nullptr);
+        glfwSetWindowPosCallback(get_window(), nullptr);
+        glfwSetWindowIconifyCallback(get_window(), nullptr);
+        glfwSetWindowMaximizeCallback(get_window(), nullptr);
+        glfwSetWindowFocusCallback(get_window(), nullptr);
+        glfwSetWindowRefreshCallback(get_window(), nullptr);
+        glfwSetKeyCallback(get_window(), nullptr);
+        glfwSetCharCallback(get_window(), nullptr);
+        glfwSetCursorPosCallback(get_window(), nullptr);
+        glfwSetCursorEnterCallback(get_window(), nullptr);
+        glfwSetMouseButtonCallback(get_window(), nullptr);
+        glfwSetScrollCallback(get_window(), nullptr);
+        glfwSetDropCallback(get_window(), nullptr);
+        glfwSetWindowCloseCallback(get_window(), nullptr);
     }
 
     void WindowWithCallback::_window_size_callback(GLFWwindow *window, int width, int height)

@@ -29,6 +29,7 @@ namespace glfw_wrapper
 
     public:
         inline ~Context() { glfwTerminate(); }
+        BASE_DELETE_COPY_FUNCTION(Context);
 
     public:
         inline void post_empty_event() const { glfwPostEmptyEvent(); }

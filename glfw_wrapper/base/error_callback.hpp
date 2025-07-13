@@ -38,6 +38,7 @@ namespace glfw_wrapper
 
     public:
         inline ~ErrorCallback() { glfwSetErrorCallback(nullptr); }
+        BASE_DELETE_COPY_FUNCTION(ErrorCallback);
 
     private:
         static inline void _error_callback(int error_code, const char *description)

@@ -36,7 +36,7 @@ namespace glfw_wrapper
         m_cursor = create_cursor(shape);
     }
 
-    void Cursor::create(const GLFWimage *image, const glm::ivec2 &hot)
+    void Cursor::create(const Image *image, const glm::ivec2 &hot)
     {
         destroy();
         m_cursor = create_cursor(image, hot.x, hot.y);

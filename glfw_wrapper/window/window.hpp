@@ -26,8 +26,16 @@ namespace glfw_wrapper
 
     public:
         inline Window() = default;
-        Window(Window &&from) : m_window(from.m_window) { from.m_window = nullptr; }
+        inline Window(const glm::ivec2 &size, const std::string &title = {}) { create(size, title); }
+        inline Window(const glm::ivec2 &size, const std::string &title,
+                      const Monitor &monitor) { create(size, title, monitor); }
+        inline Window(const glm::ivec2 &size, const std::string &title,
+                      const Window &share) { create(size, title, share); }
+        inline Window(const glm::ivec2 &size, const std::string &title,
+                      const Monitor &monitor, const Window &share) { create(size, title, monitor, share); }
+        Window(Window &&from) : m_window(std::exchange(from.m_window, nullptr)) {}
         inline ~Window() override { destroy(); }
+        BASE_DELETE_COPY_FUNCTION(Window);
 
     public:
         Window &operator=(Window &&from);
@@ -37,10 +45,10 @@ namespace glfw_wrapper
         inline operator GLFWwindow *() const { return m_window; }
 
     public:
-        void create(const glm::ivec2 &size, const std::string &title = {});
-        void create(const glm::ivec2 &size, const std::string &title, const Monitor &monitor);
-        void create(const glm::ivec2 &size, const std::string &title, const Window &share);
-        void create(const glm::ivec2 &size, const std::string &title, const Monitor &monitor, const Window &share);
+        virtual void create(const glm::ivec2 &size, const std::string &title = {});
+        virtual void create(const glm::ivec2 &size, const std::string &title, const Monitor &monitor);
+        virtual void create(const glm::ivec2 &size, const std::string &title, const Window &share);
+        virtual void create(const glm::ivec2 &size, const std::string &title, const Monitor &monitor, const Window &share);
         void destroy();
 
     public:

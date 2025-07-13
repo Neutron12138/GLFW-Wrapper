@@ -19,8 +19,11 @@ namespace glfw_wrapper
 
     public:
         inline Cursor() = default;
-        Cursor(Cursor &&from) : m_cursor(from.m_cursor) { from.m_cursor = nullptr; }
+        inline Cursor(base::Int32 shape) { create(shape); }
+        inline Cursor(const Image *image, const glm::ivec2 &hot) { create(image, hot); }
+        inline Cursor(Cursor &&from) : m_cursor(std::exchange(from.m_cursor, nullptr)) {}
         inline ~Cursor() override { destroy(); }
+        BASE_DELETE_COPY_FUNCTION(Cursor);
 
     public:
         Cursor &operator=(Cursor &&from);
@@ -31,7 +34,7 @@ namespace glfw_wrapper
 
     public:
         inline void create(base::Int32 shape);
-        inline void create(const GLFWimage *image, const glm::ivec2 &hot);
+        inline void create(const Image *image, const glm::ivec2 &hot);
         inline void destroy();
     };
 
