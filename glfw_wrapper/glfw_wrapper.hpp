@@ -20,3 +20,5 @@
 
 #include "window/window.cpp"
 #include "window/window_with_callback.cpp"
+
+#include "misc/main_loop.hpp"
