@@ -10,52 +10,52 @@ namespace glfw_wrapper
     class WindowWithCallback : public Window
     {
     public:
-        using WindowSizeFunc = void(WindowWithCallback &, const glm::ivec2 &);
+        using WindowSizeFunc = void(const glm::ivec2 &);
         using WindowSizeCallback = std::function<WindowSizeFunc>;
 
-        using FramebufferSizeFunc = void(WindowWithCallback &, const glm::ivec2 &);
+        using FramebufferSizeFunc = void(const glm::ivec2 &);
         using FramebufferSizeCallback = std::function<FramebufferSizeFunc>;
 
-        using WindowContentScaleFunc = void(WindowWithCallback &, const glm::vec2 &);
+        using WindowContentScaleFunc = void(const glm::vec2 &);
         using WindowContentScaleCallback = std::function<WindowContentScaleFunc>;
 
-        using WindowPosFunc = void(WindowWithCallback &, const glm::ivec2 &);
+        using WindowPosFunc = void(const glm::ivec2 &);
         using WindowPosCallback = std::function<WindowPosFunc>;
 
-        using WindowIconifyFunc = void(WindowWithCallback &, bool);
+        using WindowIconifyFunc = void(bool);
         using WindowIconifyCallback = std::function<WindowIconifyFunc>;
 
-        using WindowMaximizeFunc = void(WindowWithCallback &, bool);
+        using WindowMaximizeFunc = void(bool);
         using WindowMaximizeCallback = std::function<WindowMaximizeFunc>;
 
-        using WindowFocusFunc = void(WindowWithCallback &, bool);
+        using WindowFocusFunc = void(bool);
         using WindowFocusCallback = std::function<WindowFocusFunc>;
 
-        using WindowRefreshFunc = void(WindowWithCallback &);
+        using WindowRefreshFunc = void();
         using WindowRefreshCallback = std::function<WindowRefreshFunc>;
 
-        using KeyFunc = void(WindowWithCallback &, base::Int32, base::Int32, base::Int32, base::Int32);
+        using KeyFunc = void(Key, base::Int32, Action, Mod);
         using KeyCallback = std::function<KeyFunc>;
 
-        using CharFunc = void(WindowWithCallback &, base::UInt32 codepoint);
+        using CharFunc = void(base::UInt32 codepoint);
         using CharCallback = std::function<CharFunc>;
 
-        using CursorPosFunc = void(WindowWithCallback &, const glm::dvec2 &pos);
+        using CursorPosFunc = void(const glm::dvec2 &pos);
         using CursorPosCallback = std::function<CursorPosFunc>;
 
-        using CursorEnterFunc = void(WindowWithCallback &, bool);
+        using CursorEnterFunc = void(bool);
         using CursorEnterCallback = std::function<CursorEnterFunc>;
 
-        using MouseButtonFunc = void(WindowWithCallback &, base::Int32, base::Int32, base::Int32);
+        using MouseButtonFunc = void(MouseButton, Action, Mod);
         using MouseButtonCallback = std::function<MouseButtonFunc>;
 
-        using ScrollFunc = void(WindowWithCallback &, const glm::dvec2 &);
+        using ScrollFunc = void(const glm::dvec2 &);
         using ScrollCallback = std::function<ScrollFunc>;
 
-        using DropFunc = void(WindowWithCallback &, const std::vector<std::string> &paths);
+        using DropFunc = void(const std::vector<std::string> &paths);
         using DropCallback = std::function<DropFunc>;
 
-        using WindowCloseFunc = void(WindowWithCallback &);
+        using WindowCloseFunc = void();
         using WindowCloseCallback = std::function<WindowCloseFunc>;
 
     public:
@@ -103,11 +103,11 @@ namespace glfw_wrapper
         virtual void _on_window_maximize(bool maximized);
         virtual void _on_window_focus(bool focused);
         virtual void _on_window_refresh();
-        virtual void _on_key(base::Int32 key, base::Int32 scancode, base::Int32 action, base::Int32 mod);
+        virtual void _on_key(Key key, base::Int32 scancode, Action action, Mod mod);
         virtual void _on_char(base::UInt32 codepoint);
         virtual void _on_cursor_pos(const glm::dvec2 &pos);
         virtual void _on_cursor_enter(bool entered);
-        virtual void _on_mouse_button(base::Int32 button, base::Int32 action, base::Int32 mod);
+        virtual void _on_mouse_button(MouseButton button, Action action, Mod mod);
         virtual void _on_scroll(const glm::dvec2 &offset);
         virtual void _on_drop(const std::vector<std::string> &paths);
         virtual void _on_window_close();

@@ -10,7 +10,7 @@
 
 #define GLFW_WRAPPER_WINDOW_CALLBACK_CALL(name, ...) \
     if (ptr->name##_callback)                        \
-        ptr->name##_callback(*ptr, __VA_ARGS__);     \
+        ptr->name##_callback(__VA_ARGS__);           \
     ptr->_on_##name(__VA_ARGS__);
 
 namespace glfw_wrapper
@@ -61,11 +61,11 @@ namespace glfw_wrapper
     void WindowWithCallback::_on_window_maximize(bool maximized) {}
     void WindowWithCallback::_on_window_focus(bool focused) {}
     void WindowWithCallback::_on_window_refresh() {}
-    void WindowWithCallback::_on_key(base::Int32 key, base::Int32 scancode, base::Int32 action, base::Int32 mod) {}
+    void WindowWithCallback::_on_key(Key key, base::Int32 scancode, Action action, Mod mod) {}
     void WindowWithCallback::_on_char(base::UInt32 codepoint) {}
     void WindowWithCallback::_on_cursor_pos(const glm::dvec2 &pos) {}
     void WindowWithCallback::_on_cursor_enter(bool entered) {}
-    void WindowWithCallback::_on_mouse_button(base::Int32 button, base::Int32 action, base::Int32 mod) {}
+    void WindowWithCallback::_on_mouse_button(MouseButton button, Action action, Mod mod) {}
     void WindowWithCallback::_on_scroll(const glm::dvec2 &offset) {}
     void WindowWithCallback::_on_drop(const std::vector<std::string> &paths) {}
     void WindowWithCallback::_on_window_close() {}
@@ -168,14 +168,16 @@ namespace glfw_wrapper
     {
         GLFW_WRAPPER_WINDOW_CALLBACK_CHECK;
         if (ptr->window_refresh_callback)
-            ptr->window_refresh_callback(*ptr);
+            ptr->window_refresh_callback();
         ptr->_on_window_refresh();
     }
 
     void WindowWithCallback::_key_callback(GLFWwindow *window, int key, int scancode, int action, int mod)
     {
         GLFW_WRAPPER_WINDOW_CALLBACK_CHECK;
-        GLFW_WRAPPER_WINDOW_CALLBACK_CALL(key, key, scancode, action, mod);
+        if (ptr->key_callback)
+            ptr->key_callback(static_cast<Key>(key), scancode, static_cast<Action>(action), static_cast<Mod>(mod));
+        ptr->_on_key(static_cast<Key>(key), scancode, static_cast<Action>(action), static_cast<Mod>(mod));
     }
 
     void WindowWithCallback::_char_callback(GLFWwindow *window, unsigned int codepoint)
@@ -200,7 +202,9 @@ namespace glfw_wrapper
     void WindowWithCallback::_mouse_button_callback(GLFWwindow *window, int button, int action, int mod)
     {
         GLFW_WRAPPER_WINDOW_CALLBACK_CHECK;
-        GLFW_WRAPPER_WINDOW_CALLBACK_CALL(mouse_button, button, action, mod);
+        if (ptr->mouse_button_callback)
+            ptr->mouse_button_callback(static_cast<MouseButton>(button), static_cast<Action>(action), static_cast<Mod>(mod));
+        ptr->_on_mouse_button(static_cast<MouseButton>(button), static_cast<Action>(action), static_cast<Mod>(mod));
     }
 
     void WindowWithCallback::_scroll_callback(GLFWwindow *window, double xoffset, double yoffset)
@@ -221,7 +225,7 @@ namespace glfw_wrapper
     {
         GLFW_WRAPPER_WINDOW_CALLBACK_CHECK;
         if (ptr->window_close_callback)
-            ptr->window_close_callback(*ptr);
+            ptr->window_close_callback();
         ptr->_on_window_close();
     }
 

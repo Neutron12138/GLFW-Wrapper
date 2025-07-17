@@ -4,11 +4,6 @@
 
 namespace glfw_wrapper
 {
-    MainLoop::MainLoop(const glm::ivec2 &version, bool enabled, base::Int32 profile)
-        : m_opengl_context_version(version),
-          m_is_opengl_debug_context_enabled(enabled),
-          m_opengl_profile(profile) {}
-
     void MainLoop::_update(double delta) {}
     void MainLoop::_draw() {}
 
@@ -16,13 +11,16 @@ namespace glfw_wrapper
     double MainLoop::get_last_update_time() const { return m_last_update_time; }
     const glm::ivec2 &MainLoop::get_opengl_context_version() const { return m_opengl_context_version; }
     bool MainLoop::is_opengl_debug_context_enabled() const { return m_is_opengl_debug_context_enabled; }
+    const glm::ivec2 &MainLoop::get_initial_window_size() const { return m_initial_window_size; }
+    const std::string &MainLoop::get_initial_window_title() const { return m_initial_window_title; }
 
     void MainLoop::run()
     {
         Window::set_opengl(m_opengl_context_version,
                            m_is_opengl_debug_context_enabled,
                            m_opengl_profile);
-        m_window.create(glm::ivec2(1152, 648));
+        m_window.create(m_initial_window_size,
+                        m_initial_window_title);
         m_window.make_context_current();
 
         _initialize();

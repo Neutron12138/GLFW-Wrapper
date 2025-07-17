@@ -25,10 +25,13 @@ namespace glfw_wrapper
         bool m_is_opengl_debug_context_enabled = false;
         /// @brief OpenGL代理
         base::Int32 m_opengl_profile = GLFW_OPENGL_CORE_PROFILE;
+        /// @brief 初始窗口大小
+        glm::ivec2 m_initial_window_size = glm::ivec2(1152, 648);
+        /// @brief 初始窗口标题
+        std::string m_initial_window_title = {};
 
     public:
         MainLoop() = default;
-        MainLoop(const glm::ivec2 &version, bool enabled, base::Int32 profile);
         ~MainLoop() override = default;
 
     protected:
@@ -44,6 +47,8 @@ namespace glfw_wrapper
         double get_last_update_time() const;
         const glm::ivec2 &get_opengl_context_version() const;
         bool is_opengl_debug_context_enabled() const;
+        const glm::ivec2 &get_initial_window_size() const;
+        const std::string &get_initial_window_title() const;
 
     public:
         using base::Application::run;

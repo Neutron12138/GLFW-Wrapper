@@ -3,6 +3,7 @@
 #include "../base/resource.hpp"
 #include "../cursor/cursor.hpp"
 #include "../monitor/monitor.hpp"
+#include "../base/enums.hpp"
 
 namespace glfw_wrapper
 {
@@ -12,6 +13,16 @@ namespace glfw_wrapper
     class Window : public Resource
     {
     public:
+        /// @brief 输入模式
+        enum class InputMode : base::Int32
+        {
+            Cursor = GLFW_CURSOR,
+            StickyKeys = GLFW_STICKY_KEYS,
+            StickyMouseButtons = GLFW_STICKY_MOUSE_BUTTONS,
+            LockKeyMods = GLFW_LOCK_KEY_MODS,
+            RawMouseMotion = GLFW_RAW_MOUSE_MOTION,
+        };
+
         static GLFWwindow *create_glfw_window(int width, int height, const char *title = "",
                                               GLFWmonitor *monitor = nullptr, GLFWwindow *share = nullptr);
 
@@ -49,8 +60,9 @@ namespace glfw_wrapper
         void destroy();
 
     public:
-        void set_input_mode(base::Int32 mode, base::Int32 value);
-        base::Int32 get_key(base::Int32 key);
+        void set_input_mode(InputMode mode, base::Int32 value);
+        base::Int32 get_input_mode(InputMode mode) const;
+        base::Int32 get_key(Key key) const;
 
         void set_cursor();
         void set_cursor(const Cursor &cursor);

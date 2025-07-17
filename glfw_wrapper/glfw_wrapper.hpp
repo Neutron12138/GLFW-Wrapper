@@ -4,6 +4,7 @@
 
 #include "base/error.hpp"
 #include "base/glfw.hpp"
+#include "base/enums.hpp"
 #include "base/error_callback.hpp"
 #include "base/context.hpp"
 
