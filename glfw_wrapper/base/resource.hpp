@@ -25,6 +25,7 @@ namespace glfw_wrapper
     public:
         Resource() = default;
         ~Resource() override = default;
+        BASE_DELETE_COPY_FUNCTION(Resource);
     };
 
 } // namespace glfw_wrapper

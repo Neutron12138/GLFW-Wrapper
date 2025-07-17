@@ -9,36 +9,14 @@ namespace glfw_wrapper
     {
     private:
         /// @brief 先前的上下文窗口（可以为空）
-        WindowRef m_previous;
+        Window *m_previous;
         /// @brief 新绑定的上下文窗口
-        WindowRef m_current;
+        Window *m_current;
 
     public:
-        ScopedContext(const WindowRef &current)
-            : m_current(current)
-        {
-            if (!m_current)
-                throw BASE_MAKE_RUNTIME_ERROR("The newly bound context window cannot be a null pointer");
-
-            m_current->make_context_current();
-        }
-
-        ScopedContext(const WindowRef &current, const WindowRef &previous)
-            : m_current(current), m_previous(previous)
-        {
-            if (!m_current)
-                throw BASE_MAKE_RUNTIME_ERROR("The newly bound context window cannot be a null pointer");
-
-            m_current->make_context_current();
-        }
-
-        ~ScopedContext()
-        {
-            if (m_previous)
-                m_previous->make_context_current();
-            else
-                glfwMakeContextCurrent(nullptr);
-        }
+        ScopedContext(Window *current);
+        ScopedContext(Window *current, Window *previous);
+        ~ScopedContext();
     };
 
 } // namespace glfw_wrapper

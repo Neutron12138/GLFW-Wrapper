@@ -14,34 +14,26 @@ namespace glfw_wrapper
     class Monitor
     {
     public:
-        static inline Monitor get_primary() { return glfwGetPrimaryMonitor(); }
+        static Monitor get_primary();
         static std::vector<Monitor> get_monitors();
-        static inline GLFWmonitorfun set_callback(GLFWmonitorfun func) { return glfwSetMonitorCallback(func); }
+        static GLFWmonitorfun set_callback(GLFWmonitorfun func);
 
     private:
         /// @brief GLFW监视器句柄
         GLFWmonitor *m_monitor = nullptr;
 
     public:
-        inline Monitor() = default;
-        inline Monitor(GLFWmonitor *monitor) : m_monitor(monitor) {}
-        inline Monitor(const Monitor &another) : m_monitor(another.m_monitor) {}
-        inline ~Monitor() = default;
+        Monitor() = default;
+        Monitor(GLFWmonitor *monitor);
+        Monitor(const Monitor &another);
+        ~Monitor() = default;
 
     public:
-        inline Monitor &operator=(GLFWmonitor *monitor)
-        {
-            m_monitor = monitor;
-            return *this;
-        }
-        inline Monitor &operator=(const Monitor &another)
-        {
-            m_monitor = another.m_monitor;
-            return *this;
-        }
-        inline GLFWmonitor *get_monitor() const { return m_monitor; }
-        inline operator GLFWmonitor *() const { return m_monitor; }
-        inline bool is_valid() const { return m_monitor; }
+        Monitor &operator=(GLFWmonitor *monitor);
+        Monitor &operator=(const Monitor &another);
+        GLFWmonitor *get_monitor() const;
+        operator GLFWmonitor *() const;
+        bool is_valid() const;
 
     public:
         std::vector<VideoMode> get_video_modes() const;
@@ -50,14 +42,14 @@ namespace glfw_wrapper
         glm::ivec2 get_position() const;
         WorkArea get_work_area() const;
 
-        inline VideoMode get_video_mode() const { return *glfwGetVideoMode(m_monitor); }
-        inline std::string get_name() const { return glfwGetMonitorName(m_monitor); }
-        inline void *get_user_pointer() const { return glfwGetMonitorUserPointer(m_monitor); }
-        inline GammaRamp get_gamma_ramp() const { return *glfwGetGammaRamp(m_monitor); }
+        VideoMode get_video_mode() const;
+        std::string get_name() const;
+        void *get_user_pointer() const;
+        GammaRamp get_gamma_ramp() const;
 
-        inline void set_user_pointer(void *pointer) { glfwSetMonitorUserPointer(m_monitor, pointer); }
-        inline void set_gamma_ramp(const GammaRamp *ramp) { glfwSetGammaRamp(m_monitor, ramp); }
-        inline void set_gamma(float gamma) { glfwSetGamma(m_monitor, gamma); }
+        void set_user_pointer(void *pointer);
+        void set_gamma_ramp(const GammaRamp *ramp);
+        void set_gamma(float gamma);
     };
 
 } // namespace glfw_wrapper

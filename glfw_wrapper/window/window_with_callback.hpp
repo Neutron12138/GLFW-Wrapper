@@ -77,15 +77,15 @@ namespace glfw_wrapper
         WindowCloseCallback window_close_callback;
 
     public:
-        inline WindowWithCallback() = default;
-        inline WindowWithCallback(const glm::ivec2 &size, const std::string &title = {}) : Window(size, title) { _connect_callbacks(); }
-        inline WindowWithCallback(const glm::ivec2 &size, const std::string &title,
-                                  const Monitor &monitor) : Window(size, title, monitor) { _connect_callbacks(); }
-        inline WindowWithCallback(const glm::ivec2 &size, const std::string &title,
-                                  const Window &share) : Window(size, title, share) { _connect_callbacks(); }
-        inline WindowWithCallback(const glm::ivec2 &size, const std::string &title,
-                                  const Monitor &monitor, const Window &share) : Window(size, title, monitor, share) { _connect_callbacks(); }
-        inline ~WindowWithCallback() override { _disconnect_callbacks(); }
+        WindowWithCallback() = default;
+        WindowWithCallback(const glm::ivec2 &size, const std::string &title = {});
+        WindowWithCallback(const glm::ivec2 &size, const std::string &title,
+                           const Monitor &monitor);
+        WindowWithCallback(const glm::ivec2 &size, const std::string &title,
+                           const Window &share);
+        WindowWithCallback(const glm::ivec2 &size, const std::string &title,
+                           const Monitor &monitor, const Window &share);
+        ~WindowWithCallback() override;
         BASE_DELETE_COPY_FUNCTION(WindowWithCallback);
 
     public:
@@ -95,22 +95,22 @@ namespace glfw_wrapper
         void create(const glm::ivec2 &size, const std::string &title, const Monitor &monitor, const Window &share) override;
 
     protected:
-        virtual void _on_window_size(const glm::ivec2 &size) {}
-        virtual void _on_framebuffer_size(const glm::ivec2 &size) {}
-        virtual void _on_window_content_scale(const glm::vec2 &scale) {}
-        virtual void _on_window_pos(const glm::ivec2 &pos) {}
-        virtual void _on_window_iconify(bool iconified) {}
-        virtual void _on_window_maximize(bool maximized) {}
-        virtual void _on_window_focus(bool focused) {}
-        virtual void _on_window_refresh() {}
-        virtual void _on_key(base::Int32 key, base::Int32 scancode, base::Int32 action, base::Int32 mod) {}
-        virtual void _on_char(base::UInt32 codepoint) {}
-        virtual void _on_cursor_pos(const glm::dvec2 &pos) {}
-        virtual void _on_cursor_enter(bool entered) {}
-        virtual void _on_mouse_button(base::Int32 button, base::Int32 action, base::Int32 mod) {}
-        virtual void _on_scroll(const glm::dvec2 &offset) {}
-        virtual void _on_drop(const std::vector<std::string> &paths) {}
-        virtual void _on_window_close() {}
+        virtual void _on_window_size(const glm::ivec2 &size);
+        virtual void _on_framebuffer_size(const glm::ivec2 &size);
+        virtual void _on_window_content_scale(const glm::vec2 &scale);
+        virtual void _on_window_pos(const glm::ivec2 &pos);
+        virtual void _on_window_iconify(bool iconified);
+        virtual void _on_window_maximize(bool maximized);
+        virtual void _on_window_focus(bool focused);
+        virtual void _on_window_refresh();
+        virtual void _on_key(base::Int32 key, base::Int32 scancode, base::Int32 action, base::Int32 mod);
+        virtual void _on_char(base::UInt32 codepoint);
+        virtual void _on_cursor_pos(const glm::dvec2 &pos);
+        virtual void _on_cursor_enter(bool entered);
+        virtual void _on_mouse_button(base::Int32 button, base::Int32 action, base::Int32 mod);
+        virtual void _on_scroll(const glm::dvec2 &offset);
+        virtual void _on_drop(const std::vector<std::string> &paths);
+        virtual void _on_window_close();
 
     private:
         void _connect_callbacks();

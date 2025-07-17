@@ -18,26 +18,12 @@ namespace glfw_wrapper
     using GammaRamp = GLFWgammaramp;
     using Image = GLFWimage;
 
-    glm::ivec3 get_version()
-    {
-        glm::ivec3 version;
-        glfwGetVersion(&version.x, &version.y, &version.z);
-        return version;
-    }
+    glm::ivec3 get_version();
+    Error get_error();
 
-    Error get_error()
-    {
-        const char *description = nullptr;
-        int error_code = glfwGetError(&description);
-        if (error_code == GLFW_NO_ERROR)
-            return Error(GLFW_NO_ERROR, {});
-        else
-            return Error(error_code, description);
-    }
-
-    inline std::string get_version_string() { return glfwGetVersionString(); }
-    inline bool is_platform_supported(base::Int32 platform) { return glfwPlatformSupported(platform); }
-    inline void init_hint(base::Int32 hint, base::Int32 value) { glfwInitHint(hint, value); }
-    inline void init_allocator(GLFWallocator *allocator) { glfwInitAllocator(allocator); }
+    std::string get_version_string();
+    bool is_platform_supported(base::Int32 platform);
+    void init_hint(base::Int32 hint, base::Int32 value);
+    void init_allocator(GLFWallocator *allocator);
 
 } // namespace glfw_wrapper

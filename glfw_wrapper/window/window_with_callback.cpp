@@ -1,3 +1,5 @@
+#pragma once
+
 #include "window_with_callback.hpp"
 
 #define GLFW_WRAPPER_WINDOW_CALLBACK_CHECK \
@@ -13,6 +15,16 @@
 
 namespace glfw_wrapper
 {
+    WindowWithCallback::WindowWithCallback(const glm::ivec2 &size, const std::string &title)
+        : Window(size, title) { _connect_callbacks(); }
+    WindowWithCallback::WindowWithCallback(const glm::ivec2 &size, const std::string &title, const Monitor &monitor)
+        : Window(size, title, monitor) { _connect_callbacks(); }
+    WindowWithCallback::WindowWithCallback(const glm::ivec2 &size, const std::string &title, const Window &share)
+        : Window(size, title, share) { _connect_callbacks(); }
+    WindowWithCallback::WindowWithCallback(const glm::ivec2 &size, const std::string &title, const Monitor &monitor, const Window &share)
+        : Window(size, title, monitor, share) { _connect_callbacks(); }
+    WindowWithCallback::~WindowWithCallback() { _disconnect_callbacks(); }
+
     void WindowWithCallback::create(const glm::ivec2 &size, const std::string &title)
     {
         _disconnect_callbacks();
@@ -40,6 +52,23 @@ namespace glfw_wrapper
         Window::create(size, title, monitor, share);
         _connect_callbacks();
     }
+
+    void WindowWithCallback::_on_window_size(const glm::ivec2 &size) {}
+    void WindowWithCallback::_on_framebuffer_size(const glm::ivec2 &size) {}
+    void WindowWithCallback::_on_window_content_scale(const glm::vec2 &scale) {}
+    void WindowWithCallback::_on_window_pos(const glm::ivec2 &pos) {}
+    void WindowWithCallback::_on_window_iconify(bool iconified) {}
+    void WindowWithCallback::_on_window_maximize(bool maximized) {}
+    void WindowWithCallback::_on_window_focus(bool focused) {}
+    void WindowWithCallback::_on_window_refresh() {}
+    void WindowWithCallback::_on_key(base::Int32 key, base::Int32 scancode, base::Int32 action, base::Int32 mod) {}
+    void WindowWithCallback::_on_char(base::UInt32 codepoint) {}
+    void WindowWithCallback::_on_cursor_pos(const glm::dvec2 &pos) {}
+    void WindowWithCallback::_on_cursor_enter(bool entered) {}
+    void WindowWithCallback::_on_mouse_button(base::Int32 button, base::Int32 action, base::Int32 mod) {}
+    void WindowWithCallback::_on_scroll(const glm::dvec2 &offset) {}
+    void WindowWithCallback::_on_drop(const std::vector<std::string> &paths) {}
+    void WindowWithCallback::_on_window_close() {}
 
     void WindowWithCallback::_connect_callbacks()
     {

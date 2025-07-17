@@ -1,3 +1,5 @@
+#pragma once
+
 #include "cursor.hpp"
 
 namespace glfw_wrapper
@@ -22,6 +24,11 @@ namespace glfw_wrapper
         return cursor;
     }
 
+    Cursor::Cursor(base::Int32 shape) { create(shape); }
+    Cursor::Cursor(const Image *image, const glm::ivec2 &hot) { create(image, hot); }
+    Cursor::Cursor(Cursor &&from) : m_cursor(std::exchange(from.m_cursor, nullptr)) {}
+    Cursor::~Cursor() { destroy(); }
+
     Cursor &Cursor::operator=(Cursor &&from)
     {
         destroy();
@@ -29,6 +36,11 @@ namespace glfw_wrapper
         from.m_cursor = nullptr;
         return *this;
     }
+
+    GLFWcursor *Cursor::get_cursor() const { return m_cursor; }
+    base::Int64 Cursor::get_resource_type() const { return static_cast<base::Int64>(ResourceType::Cursor); }
+    bool Cursor::is_valid() const { return m_cursor; }
+    Cursor::operator GLFWcursor *() const { return m_cursor; }
 
     void Cursor::create(base::Int32 shape)
     {

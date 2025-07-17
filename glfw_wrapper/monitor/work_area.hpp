@@ -14,9 +14,9 @@ namespace glfw_wrapper
         const glm::ivec2 size;
 
     public:
-        WorkArea(const glm::ivec2 &pos, const glm::ivec2 &sz)
+        inline WorkArea(const glm::ivec2 &pos, const glm::ivec2 &sz)
             : position(pos), size(sz) {}
-        ~WorkArea() = default;
+        inline ~WorkArea() = default;
     };
 
 } // namespace glfw_wrapper

@@ -18,24 +18,24 @@ namespace glfw_wrapper
         GLFWcursor *m_cursor = nullptr;
 
     public:
-        inline Cursor() = default;
-        inline Cursor(base::Int32 shape) { create(shape); }
-        inline Cursor(const Image *image, const glm::ivec2 &hot) { create(image, hot); }
-        inline Cursor(Cursor &&from) : m_cursor(std::exchange(from.m_cursor, nullptr)) {}
-        inline ~Cursor() override { destroy(); }
+        Cursor() = default;
+        Cursor(base::Int32 shape);
+        Cursor(const Image *image, const glm::ivec2 &hot);
+        Cursor(Cursor &&from);
+        ~Cursor() override;
         BASE_DELETE_COPY_FUNCTION(Cursor);
 
     public:
         Cursor &operator=(Cursor &&from);
-        GLFWcursor *get_cursor() const { return m_cursor; }
-        inline base::Int64 get_resource_type() const override { return static_cast<base::Int64>(ResourceType::Cursor); }
-        inline bool is_valid() const override { return m_cursor; }
-        inline operator GLFWcursor *() const { return m_cursor; }
+        GLFWcursor *get_cursor() const;
+        base::Int64 get_resource_type() const override;
+        bool is_valid() const override;
+        operator GLFWcursor *() const;
 
     public:
-        inline void create(base::Int32 shape);
-        inline void create(const Image *image, const glm::ivec2 &hot);
-        inline void destroy();
+        void create(base::Int32 shape);
+        void create(const Image *image, const glm::ivec2 &hot);
+        void destroy();
     };
 
 } // namespace glfw_wrapper

@@ -7,7 +7,7 @@ echo %input%.exe
 
 echo ----------Compling----------
 g++ -finput-charset=utf-8 -fexec-charset=gbk %input%.cpp -o %input%.exe^
-    -lopengl32 -lglew32 -lglfw3 -lsfml-system -lsfml-window -lsfml-graphics -lgdi32 
+    -lopengl32 -lglfw3 -lgdi32 -L. -lglfw_wrapper
 
 echo ----------Running----------
 %input%.exe
