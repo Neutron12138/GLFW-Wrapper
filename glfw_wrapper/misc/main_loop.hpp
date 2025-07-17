@@ -5,10 +5,6 @@
 #include "../base/error_callback.hpp"
 #include "../window/window_with_callback.hpp"
 
-#ifndef GLFW_WRAPPER_ENABLE_GL_DEBUG
-#define GLFW_WRAPPER_ENABLE_GL_DEBUG false
-#endif
-
 namespace glfw_wrapper
 {
     /// @brief 主循环
@@ -23,9 +19,16 @@ namespace glfw_wrapper
         WindowWithCallback m_window;
         /// @brief 上次更新时间
         double m_last_update_time = 0.0;
+        /// @brief OpenGL上下文版本
+        glm::ivec2 m_opengl_context_version = glm::ivec2(4, 5);
+        /// @brief 启用OpenGL调试
+        bool m_is_opengl_debug_context_enabled = false;
+        /// @brief OpenGL代理
+        base::Int32 m_opengl_profile = GLFW_OPENGL_CORE_PROFILE;
 
     public:
         MainLoop() = default;
+        MainLoop(const glm::ivec2 &version, bool enabled, base::Int32 profile);
         ~MainLoop() override = default;
 
     protected:
@@ -39,6 +42,8 @@ namespace glfw_wrapper
     public:
         const WindowWithCallback &get_window() const;
         double get_last_update_time() const;
+        const glm::ivec2 &get_opengl_context_version() const;
+        bool is_opengl_debug_context_enabled() const;
 
     public:
         using base::Application::run;
