@@ -90,7 +90,7 @@ namespace glfw_wrapper
 
     void Window::set_input_mode(InputMode mode, base::Int32 value) { glfwSetInputMode(m_window, static_cast<int>(mode), value); }
     base::Int32 Window::get_input_mode(InputMode mode) const { return glfwGetInputMode(m_window, static_cast<int>(mode)); }
-    base::Int32 Window::get_key(Key key) const { return glfwGetKey(m_window, static_cast<int>(key)); }
+    Action Window::get_key(Key key) const { return static_cast<Action>(glfwGetKey(m_window, static_cast<int>(key))); }
 
     void Window::set_cursor() { glfwSetCursor(m_window, nullptr); }
     void Window::set_cursor(const Cursor &cursor) { glfwSetCursor(m_window, cursor.get_cursor()); }

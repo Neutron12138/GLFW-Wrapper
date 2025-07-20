@@ -62,7 +62,7 @@ namespace glfw_wrapper
     public:
         void set_input_mode(InputMode mode, base::Int32 value);
         base::Int32 get_input_mode(InputMode mode) const;
-        base::Int32 get_key(Key key) const;
+        Action get_key(Key key) const;
 
         void set_cursor();
         void set_cursor(const Cursor &cursor);
