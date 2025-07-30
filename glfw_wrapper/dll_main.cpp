@@ -1,5 +1,5 @@
+#define GLFW_WRAPPER_INCLUDE_IMPL
 #include "glfw_wrapper.hpp"
-#include "glfw_wrapper.cpp"
 
 #include <windows.h>
 
