@@ -78,17 +78,12 @@ namespace glfw_wrapper
 
     public:
         WindowWithCallback() = default;
-        WindowWithCallback(const glm::ivec2 &size, const std::string &title = {});
-        WindowWithCallback(const glm::ivec2 &size, const std::string &title,
-                           const Monitor &monitor);
-        WindowWithCallback(const glm::ivec2 &size, const std::string &title,
-                           const Window &share);
-        WindowWithCallback(const glm::ivec2 &size, const std::string &title,
-                           const Monitor &monitor, const Window &share);
+        WindowWithCallback(WindowWithCallback &&from);
         ~WindowWithCallback() override;
         BASE_DELETE_COPY_FUNCTION(WindowWithCallback);
 
     public:
+        WindowWithCallback &operator=(WindowWithCallback &&from);
         void create(const glm::ivec2 &size, const std::string &title = {}) override;
         void create(const glm::ivec2 &size, const std::string &title, const Monitor &monitor) override;
         void create(const glm::ivec2 &size, const std::string &title, const Window &share) override;
@@ -133,5 +128,27 @@ namespace glfw_wrapper
         static void _drop_callback(GLFWwindow *window, int count, const char **paths);
         static void _window_close_callback(GLFWwindow *window);
     };
+
+    WindowWithCallback create_window_with_callback(const glm::ivec2 &size, const std::string &title = {});
+    WindowWithCallback create_window_with_callback(const glm::ivec2 &size, const std::string &title, const Monitor &monitor);
+    WindowWithCallback create_window_with_callback(const glm::ivec2 &size, const std::string &title, const Window &share);
+    WindowWithCallback create_window_with_callback(const glm::ivec2 &size, const std::string &title,
+                                                   const Monitor &monitor, const Window &share);
+
+    WindowWithCallbackRef create_window_with_callback_shared(const glm::ivec2 &size, const std::string &title = {});
+    WindowWithCallbackRef create_window_with_callback_shared(const glm::ivec2 &size, const std::string &title,
+                                                             const Monitor &monitor);
+    WindowWithCallbackRef create_window_with_callback_shared(const glm::ivec2 &size, const std::string &title,
+                                                             const Window &share);
+    WindowWithCallbackRef create_window_with_callback_shared(const glm::ivec2 &size, const std::string &title,
+                                                             const Monitor &monitor, const Window &share);
+
+    WindowWithCallbackUniqueRef create_window_with_callback_unique(const glm::ivec2 &size, const std::string &title = {});
+    WindowWithCallbackUniqueRef create_window_with_callback_unique(const glm::ivec2 &size, const std::string &title,
+                                                                   const Monitor &monitor);
+    WindowWithCallbackUniqueRef create_window_with_callback_unique(const glm::ivec2 &size, const std::string &title,
+                                                                   const Window &share);
+    WindowWithCallbackUniqueRef create_window_with_callback_unique(const glm::ivec2 &size, const std::string &title,
+                                                                   const Monitor &monitor, const Window &share);
 
 } // namespace glfw_wrapper

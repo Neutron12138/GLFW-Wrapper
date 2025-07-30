@@ -16,7 +16,7 @@ namespace glfw_wrapper
         /// @brief GLFW错误回调
         ErrorCallback &m_glfw_error_callback = ErrorCallback::get_instance();
         /// @brief GLFW窗口
-        WindowWithCallback m_window;
+        WindowWithCallback m_window = {};
         /// @brief 上次更新时间
         double m_last_update_time = 0.0;
         /// @brief OpenGL上下文版本

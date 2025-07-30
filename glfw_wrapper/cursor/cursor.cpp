@@ -4,7 +4,7 @@
 
 namespace glfw_wrapper
 {
-    GLFWcursor *Cursor::create_cursor(int shape)
+    GLFWcursor *Cursor::create_glfw_cursor(int shape)
     {
         GLFWcursor *cursor = glfwCreateStandardCursor(shape);
         if (!cursor)
@@ -13,7 +13,7 @@ namespace glfw_wrapper
         return cursor;
     }
 
-    GLFWcursor *Cursor::create_cursor(const GLFWimage *image, int xhot, int yhot)
+    GLFWcursor *Cursor::create_glfw_cursor(const GLFWimage *image, int xhot, int yhot)
     {
         GLFWcursor *cursor = glfwCreateCursor(image, xhot, yhot);
         if (!cursor)
@@ -24,8 +24,6 @@ namespace glfw_wrapper
         return cursor;
     }
 
-    Cursor::Cursor(base::Int32 shape) { create(shape); }
-    Cursor::Cursor(const Image *image, const glm::ivec2 &hot) { create(image, hot); }
     Cursor::Cursor(Cursor &&from) : m_cursor(std::exchange(from.m_cursor, nullptr)) {}
     Cursor::~Cursor() { destroy(); }
 
@@ -42,16 +40,16 @@ namespace glfw_wrapper
     bool Cursor::is_valid() const { return m_cursor; }
     Cursor::operator GLFWcursor *() const { return m_cursor; }
 
-    void Cursor::create(base::Int32 shape)
+    void Cursor::create(Shape shape)
     {
         destroy();
-        m_cursor = create_cursor(shape);
+        m_cursor = create_glfw_cursor(static_cast<base::Int32>(shape));
     }
 
     void Cursor::create(const Image *image, const glm::ivec2 &hot)
     {
         destroy();
-        m_cursor = create_cursor(image, hot.x, hot.y);
+        m_cursor = create_glfw_cursor(image, hot.x, hot.y);
     }
 
     void Cursor::destroy()

@@ -37,10 +37,6 @@ namespace glfw_wrapper
 
     public:
         Window() = default;
-        Window(const glm::ivec2 &size, const std::string &title = {});
-        Window(const glm::ivec2 &size, const std::string &title, const Monitor &monitor);
-        Window(const glm::ivec2 &size, const std::string &title, const Window &share);
-        Window(const glm::ivec2 &size, const std::string &title, const Monitor &monitor, const Window &share);
         Window(Window &&from);
         ~Window() override;
         BASE_DELETE_COPY_FUNCTION(Window);
@@ -104,5 +100,20 @@ namespace glfw_wrapper
         void set_opacity(float opacity);
         void set_monitor(const Monitor &monitor, const glm::ivec2 &pos, const glm::ivec2 &size, base::Int32 refresh_rate);
     };
+
+    Window create_window(const glm::ivec2 &size, const std::string &title = {});
+    Window create_window(const glm::ivec2 &size, const std::string &title, const Monitor &monitor);
+    Window create_window(const glm::ivec2 &size, const std::string &title, const Window &share);
+    Window create_window(const glm::ivec2 &size, const std::string &title, const Monitor &monitor, const Window &share);
+
+    WindowRef create_window_shared(const glm::ivec2 &size, const std::string &title = {});
+    WindowRef create_window_shared(const glm::ivec2 &size, const std::string &title, const Monitor &monitor);
+    WindowRef create_window_shared(const glm::ivec2 &size, const std::string &title, const Window &share);
+    WindowRef create_window_shared(const glm::ivec2 &size, const std::string &title, const Monitor &monitor, const Window &share);
+
+    WindowUniqueRef create_window_unique(const glm::ivec2 &size, const std::string &title = {});
+    WindowUniqueRef create_window_unique(const glm::ivec2 &size, const std::string &title, const Monitor &monitor);
+    WindowUniqueRef create_window_unique(const glm::ivec2 &size, const std::string &title, const Window &share);
+    WindowUniqueRef create_window_unique(const glm::ivec2 &size, const std::string &title, const Monitor &monitor, const Window &share);
 
 } // namespace glfw_wrapper

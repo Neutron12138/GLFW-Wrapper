@@ -34,14 +34,9 @@ namespace glfw_wrapper
         set_opengl(glm::ivec2(4, 5), enable_debug, profile);
     }
 
-    Window::Window(const glm::ivec2 &size, const std::string &title) { create(size, title); }
-    Window::Window(const glm::ivec2 &size, const std::string &title,
-                   const Monitor &monitor) { create(size, title, monitor); }
-    Window::Window(const glm::ivec2 &size, const std::string &title,
-                   const Window &share) { create(size, title, share); }
-    Window::Window(const glm::ivec2 &size, const std::string &title,
-                   const Monitor &monitor, const Window &share) { create(size, title, monitor, share); }
-    Window::Window(Window &&from) : m_window(std::exchange(from.m_window, nullptr)) {}
+    Window::Window(Window &&from)
+        : m_window(std::exchange(from.m_window, nullptr)) {}
+
     Window::~Window() { destroy(); }
 
     Window &Window::operator=(Window &&from)

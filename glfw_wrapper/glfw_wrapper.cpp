@@ -11,6 +11,7 @@
 // cursor
 
 #include "cursor/cursor.cpp"
+#include "cursor/create_cursor.cpp"
 
 // monitor
 
@@ -19,8 +20,10 @@
 // window
 
 #include "window/window.cpp"
+#include "window/create_window.cpp"
 #include "window/scoped_context.cpp"
 #include "window/window_with_callback.cpp"
+#include "window/create_window_with_callback.cpp"
 
 // misc
 

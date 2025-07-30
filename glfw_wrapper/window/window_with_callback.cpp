@@ -13,17 +13,57 @@
         ptr->name##_callback(__VA_ARGS__);           \
     ptr->_on_##name(__VA_ARGS__);
 
+#define GLFW_WRAPPER_WINDOW_CALLBACK_MOVE(name) \
+    name##_callback(std::exchange(from.name##_callback, nullptr))
+
+#define GLFW_WRAPPER_WINDOW_CALLBACK_ASSIGN(name) \
+    name##_callback = std::exchange(from.name##_callback, nullptr);
+
 namespace glfw_wrapper
 {
-    WindowWithCallback::WindowWithCallback(const glm::ivec2 &size, const std::string &title)
-        : Window(size, title) { _connect_callbacks(); }
-    WindowWithCallback::WindowWithCallback(const glm::ivec2 &size, const std::string &title, const Monitor &monitor)
-        : Window(size, title, monitor) { _connect_callbacks(); }
-    WindowWithCallback::WindowWithCallback(const glm::ivec2 &size, const std::string &title, const Window &share)
-        : Window(size, title, share) { _connect_callbacks(); }
-    WindowWithCallback::WindowWithCallback(const glm::ivec2 &size, const std::string &title, const Monitor &monitor, const Window &share)
-        : Window(size, title, monitor, share) { _connect_callbacks(); }
+    WindowWithCallback::WindowWithCallback(WindowWithCallback &&from)
+        : Window(std::move(from)),
+          GLFW_WRAPPER_WINDOW_CALLBACK_MOVE(window_size),
+          GLFW_WRAPPER_WINDOW_CALLBACK_MOVE(framebuffer_size),
+          GLFW_WRAPPER_WINDOW_CALLBACK_MOVE(window_content_scale),
+          GLFW_WRAPPER_WINDOW_CALLBACK_MOVE(window_pos),
+          GLFW_WRAPPER_WINDOW_CALLBACK_MOVE(window_iconify),
+          GLFW_WRAPPER_WINDOW_CALLBACK_MOVE(window_maximize),
+          GLFW_WRAPPER_WINDOW_CALLBACK_MOVE(window_focus),
+          GLFW_WRAPPER_WINDOW_CALLBACK_MOVE(window_refresh),
+          GLFW_WRAPPER_WINDOW_CALLBACK_MOVE(key),
+          GLFW_WRAPPER_WINDOW_CALLBACK_MOVE(char),
+          GLFW_WRAPPER_WINDOW_CALLBACK_MOVE(cursor_pos),
+          GLFW_WRAPPER_WINDOW_CALLBACK_MOVE(cursor_enter),
+          GLFW_WRAPPER_WINDOW_CALLBACK_MOVE(mouse_button),
+          GLFW_WRAPPER_WINDOW_CALLBACK_MOVE(scroll),
+          GLFW_WRAPPER_WINDOW_CALLBACK_MOVE(drop),
+          GLFW_WRAPPER_WINDOW_CALLBACK_MOVE(window_close) {}
+
     WindowWithCallback::~WindowWithCallback() { _disconnect_callbacks(); }
+
+    WindowWithCallback &WindowWithCallback::operator=(WindowWithCallback &&from)
+    {
+        Window::operator=(std::move(from));
+        GLFW_WRAPPER_WINDOW_CALLBACK_ASSIGN(window_size);
+        GLFW_WRAPPER_WINDOW_CALLBACK_ASSIGN(framebuffer_size);
+        GLFW_WRAPPER_WINDOW_CALLBACK_ASSIGN(window_content_scale);
+        GLFW_WRAPPER_WINDOW_CALLBACK_ASSIGN(window_pos);
+        GLFW_WRAPPER_WINDOW_CALLBACK_ASSIGN(window_iconify);
+        GLFW_WRAPPER_WINDOW_CALLBACK_ASSIGN(window_maximize);
+        GLFW_WRAPPER_WINDOW_CALLBACK_ASSIGN(window_focus);
+        GLFW_WRAPPER_WINDOW_CALLBACK_ASSIGN(window_refresh);
+        GLFW_WRAPPER_WINDOW_CALLBACK_ASSIGN(key);
+        GLFW_WRAPPER_WINDOW_CALLBACK_ASSIGN(char);
+        GLFW_WRAPPER_WINDOW_CALLBACK_ASSIGN(cursor_pos);
+        GLFW_WRAPPER_WINDOW_CALLBACK_ASSIGN(cursor_enter);
+        GLFW_WRAPPER_WINDOW_CALLBACK_ASSIGN(mouse_button);
+        GLFW_WRAPPER_WINDOW_CALLBACK_ASSIGN(scroll);
+        GLFW_WRAPPER_WINDOW_CALLBACK_ASSIGN(drop);
+        GLFW_WRAPPER_WINDOW_CALLBACK_ASSIGN(window_close);
+
+        return *this;
+    }
 
     void WindowWithCallback::create(const glm::ivec2 &size, const std::string &title)
     {
@@ -73,7 +113,7 @@ namespace glfw_wrapper
     void WindowWithCallback::_connect_callbacks()
     {
         if (!get_window())
-            return;
+            throw BASE_MAKE_CLASS_RUNTIME_ERROR("Unable to connect callbacks on null pointer object, this: ", this);
 
         glfwSetWindowUserPointer(get_window(), this);
         glfwSetWindowSizeCallback(get_window(), _window_size_callback);

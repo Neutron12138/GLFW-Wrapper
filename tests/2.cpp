@@ -4,7 +4,7 @@
 class MyWindow : public glfw_wrapper::WindowWithCallback
 {
 public:
-    MyWindow() : glfw_wrapper::WindowWithCallback(glm::ivec2(512, 512)) {}
+    MyWindow() { create(glm::ivec2(512, 512), "test 2"); }
     ~MyWindow() override = default;
 
 protected:
