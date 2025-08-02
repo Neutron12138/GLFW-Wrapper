@@ -3,7 +3,7 @@
 #include <iostream>
 #include <base/core/type.hpp>
 #include <base/core/exception.hpp>
-#include <base/misc/noncopyable_object.hpp>
+#include <base/core/noncopyable_object.hpp>
 #include "glfw.hpp"
 #include "../window/window.hpp"
 

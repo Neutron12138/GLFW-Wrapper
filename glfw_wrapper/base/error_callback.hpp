@@ -3,7 +3,7 @@
 #include <iostream>
 #include <vector>
 #include <functional>
-#include <base/misc/noncopyable_object.hpp>
+#include <base/core/noncopyable_object.hpp>
 #include "glfw.hpp"
 
 namespace glfw_wrapper
